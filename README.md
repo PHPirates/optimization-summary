@@ -1,0 +1,1 @@
+[![Build Status](https://api.travis-ci.org/PHPirates/optimization-summary.svg)](https://travis-ci.org/PHPirates/optimization-summary)

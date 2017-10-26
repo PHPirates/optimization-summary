@@ -1,0 +1,18 @@
+notification:
+  email: false
+before_install:
+- sudo apt-get update
+- sudo apt-get install texlive-latex-extra
+script:
+- mkdir _build
+- travis_wait 3 pdflatex -output-directory _build ./src/optimization-summary.tex
+deploy:
+  provider: releases
+  api_key:
+    secure: h753OnOgWapUVv7FjGhfsbc5GsIPjFB87AZ18cdi610AFsn4vvOMUWLfst4XFAczxshaUt//9s1JUXjvOojsh+Nm9V4kgxeWsSvl4yA/nrOTutcnF8MW3fL/CZ3Hw7oL5oSTocz9Twow+1AjmLqPBuoY0QbtLHvVULHS+1/MZdmCkJ1sKK2ecF+v1VSowl57bZ89fXz7bjKW0OOx2ZifkcGXSMRN24h2rnD7pvSjQBIGdHoKK9ODAfFA5xIMbA7CgGNgR6XGNXFmacytCfboh0jAKoq8DBaB5nQX6IYzk2J2FygKMjzVBsJ4tq7fu/Hgnj1lOGZmFujuKx8cDGdm3UhEOhZ+siKoHvUpjere5U+U9U8qQRQ6ixSmkLq7rABXZf0y4mjSTklYzyjRRdUtsjDGMakkgDXrDYIXDHusnBFdre5L4WBHquuzPoMFrfM0Gy7lMbMRdn65vs1vzKr3OWt4aYCW9xP5qJM8FKJ5X3xQ9ebtcnzpewoi1sC+j7bn3a/ogN6UOFmQLJEbPZY49AZfowQ48D9o062SuTcZTcGT59iGSg/YdL3IRaXOyulQxjMiErvCoxj6qqUnm+G9JVEp86b2HWkTzBQOgcaESmDREFTq/o24HdouoG8Nes8byCBwzIt/8rVjte/7UbPxR26DT5MhA3FsUS0DlFWj/q8=
+  file:
+  - ./_build/optimization-summary.pdf
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
