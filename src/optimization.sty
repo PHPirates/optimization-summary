@@ -1,0 +1,57 @@
+% Packages
+%\usepackage{../src/thomaspackage}
+\RequirePackage[fleqn]{amsmath} % left align equations option
+\RequirePackage{amsthm} % proof environments
+\RequirePackage{amssymb} % some symbols like probability P, or real number R
+\RequirePackage{mathtools} % improvement over amsmath, like \coloneqq
+\RequirePackage{enumerate} % numbered list
+\RequirePackage{thmtools} % define custom to prove environments
+\RequirePackage{stmaryrd} % \lightning
+\RequirePackage{imakeidx} % Used for index
+
+
+\theoremstyle{definition}
+\newtheorem*{define}{Definition}
+\newtheorem*{question}{Question}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{answer}{Answer}
+\newcommand{\indx}[1]{\index{#1}\textsl{#1}} % Do not use \sl
+
+\newcommand{\reals}{\mathbb{R}}
+
+% To remove the section numbering
+\renewcommand\@seccntformat[1]{}
+
+% Bold theorem titles
+\makeatletter
+\def\th@plain{%
+\thm@notefont{}% same as heading font
+\itshape % body font
+}
+\def\th@definition{%
+\thm@notefont{}% same as heading font
+\normalfont % body font
+}
+\makeatother
+
+
+% Matrix with vertical lines, use with parameter {cc|c}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+\hskip -\arraycolsep
+\let\@ifnextchar\new@ifnextchar
+\array{#1}}
+\makeatother
+
+% Define matrix with optional parameter
+% Use with \matrix[c|c]{1 & 2 \\ 3 & 4 }
+% todo surround with \@ifundefined
+\makeatletter
+% In this case the [ is not part of a pair of brackets enclosing an argument. The \@ifnextchar[ looks at the next character in the stream and tests to see if it is [ to see if there is an optional argument or not. Thus in this case [ is playing the role of just a simple single character.
+\def\matrix{\@ifnextchar[{\@with}{\@without}}
+\def\@with[#1]#2{\begin{bmatrix}[#1] #2 \end{bmatrix}}
+\def\@without#1{\begin{bmatrix} #1 \end{bmatrix}}
+\makeatother
+
+\makeindex
+\endinput

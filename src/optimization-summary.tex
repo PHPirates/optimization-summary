@@ -6,12 +6,125 @@
 % Preamble
 \documentclass{exam}
 
-% Packages
-\usepackage{../src/thomaspackage}
+\title{Summary of Linear Optimization 2WO20 \\ \small According to the summary of topics that you need to know for the exam}
+\author{Thomas Schouten}
+
+\usepackage{../src/optimization}
 
 % Document
 \begin{document}
 
-Hi.
+    \maketitle
+
+    \section{Introduction}\label{sec:introduction}
+
+    \begin{define}
+        A \indx{linear optimization problem} consists of optimizing a linear objective function given linear inequality constraints.
+    \end{define}
+    
+    \begin{question}
+        Reduce the linear optimization problem
+        \[
+            \min/\max \{ zx \mid Px \le u,\ Qx \ge v,\ Rx =w,\ x \in \reals^n \}
+        \]
+        for example
+        \[
+            \max \{ 5x + z \mid -x +y \ge 2,\ x + 4y + z \le 3,\ x,y,z \ge 0,\ x \in \reals^3 \}
+        \]
+        to standard form.
+    \end{question}
+    \begin{answer}
+        The standard form is
+        \[
+            \max \{ cx \mid Ax\le b,\ x \in \reals^n \}
+        \]
+        and because the problem given is a list of equations, the answer is
+        \[
+            \max \{ 5x + z \mid x-y \le -2,\ x +4y+z \le 3,\ -x \le 0,\ -y\le 0,\ -z\le 0,\ x \in \reals^3 \}.
+        \]
+    \end{answer}
+    \begin{theorem}[Fredholms Alternative]
+        If $A$ is an $m\times n$ real matrix and $b \in \reals^m$, then exactly one of the following is true.
+        \begin{enumerate}
+            \item There exists a column vector $x \in \reals^n$ such that $Ax=b$.
+            \item There exists a row vector $y \in \reals^m$ such that $yA=0$ and $yb=1$.
+        \end{enumerate}
+    \end{theorem}
+    \begin{question}
+        Find any $x$ or $y$ as above given
+        \[
+            A = \matrix{1 & 5&0 \\ 1 & 2 & 1 \\ 1 & 1 & 2},\ b=\matrix{2 \\ 2 \\ 3}.
+        \]
+    \end{question}
+    \begin{answer}
+        We do Gaussian elimination on $[I|A|b]$, which you can read as $IAx=b$.
+        \[
+            \matrix[ccc|ccc|c]{
+            1 & 0 & 0 & 1 & 5 & 0 & 2 \\
+            0 & 1 & 0 & 1 & 2 & 1 & 2 \\
+            0 & 0 & 1 & 1 & 1 & 2 & 3 \\
+            }
+            \sim
+            \matrix[ccc|ccc|c]{
+            - \frac 3 2 & 5 & - \frac 5 2 & 1 & 0 & 0 & - \frac 1 2 \\
+            \frac 1 2 & -1 & \frac 1 2 & 0 & 1 & 0 & \frac 1 2 \\
+            \frac 1 2 & -2 & \frac 1 2 & 0 & 0 & 1 & \frac 3 2 \\
+            }
+        \]
+        so $x = \matrix{- \frac 1 2 \\ \frac 1 2 \\ \frac 3 2}$.
+    \end{answer}
+    \begin{question}
+        Find any $x$ or $y$ as above given
+        \[
+            A = \matrix{1 & 2 \\ 4 & -3 \\ 5 & -1},\ b=\matrix{3 & 1 & 3}.
+        \]
+    \end{question}
+    \begin{answer} Similarly to the last question,
+        \[
+            \matrix[ccc|cc|c]{
+            1 & 0 & 0 & 1 & 2 & 3 \\
+            0 & 1 & 0 & 4 & -3 & 1 \\
+            0 & 0 & 1 & 5 & -1 & 3 \\
+            }
+            \sim
+            \matrix[ccc|cc|c]{
+            \frac 3 {11} & \frac 2 {11} & 0 & 1 & 0 & 1\\
+            \frac 4 {11} & - \frac 1 {11} & 0 & 0 & 1 & 1 \\
+            1 & 1 & -1 & 0 & 0 & 1 \\
+            }
+        \]
+        So now we see that $IAx=b \sim \matrix{c_1 & 1 & 0 \\ c_2 & 0 & 1 \\ c_3 & 0 & 0} = \matrix{1 \\ 1 \\ 1}$ which includes the equation $\matrix{c_3 \cdot 0 & c_3 \cdot 0}\cdot \matrix{x \\ y} = 1$ which is impossible.
+        We now look at the row which made this impossible, and take $y=\matrix{1 & 1 & -1}$, and verify that $yA=0$ and $yb=1$.
+    \end{answer}
+
+    \section{Chapter 1}\label{sec:chapter1}
+    
+    \begin{define}
+        A set is \indx{convex} if $[x,y] \subseteq C$ for all $x,y \in C$, where $[x,y]$ is the line segment $\{ \lambda x + (1-\lambda)y : \lambda \in [0,1] \}$.
+    \end{define}
+    \begin{define}
+        A set $C$ is a \indx{cone} if $\alpha x + \beta y \in C$ for all $x,y \in C$ and $\alpha, \beta >0$.
+    \end{define}
+    \begin{define}
+        A set $H$ is a \indx{hyperplane} if there exist a $d \in \reals^n$ and $\delta \in \reals$ such that
+        \[
+            H = H_{d, \delta} = \{ x \in \reals^n : d x = \delta \}.
+        \]
+    \end{define}
+    \begin{define}
+        Let $H_{d,\delta}^{\le} = \{ x \in \reals^n : dx \le \delta \}$ be a \indx{halfspace}, defined similarly for $\ge, <, >$.
+        $H_{d, \delta}$ is a \indx{separating hyperplane} of sets $X$ and $Y$ if $X \subseteq H_{d,\delta}^\le$ and $Y \subseteq H_{d,\delta}^\ge$.
+        It is a \indx{strongly separating hyperplane} if $X \subseteq H_{d,\delta}^<$ and $Y \subseteq H_{d,\delta}^>$.
+    \end{define}
+    \begin{theorem}[Separation Theorem]
+        Let $C \subseteq \reals^n$ be a closed, convex set, $x \in \reals^n$.
+        Then
+        \[
+            x \not \in C \implies \text{there exists a hyperplane $H$ such that $H$ separates $\{x\}$ from $C$}.
+        \]
+    \end{theorem}
+    \begin{proof}
+        Take
+    \end{proof}
 
 \end{document}
