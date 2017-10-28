@@ -3,6 +3,7 @@ notification:
 before_install:
 - sudo apt-get update
 - sudo apt-get install texlive-latex-extra
+- sudo tlmgr install stmaryrd
 script:
 - mkdir _build
 - travis_wait 3 pdflatex -output-directory _build ./src/optimization-summary.tex
