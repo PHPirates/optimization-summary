@@ -6,7 +6,7 @@
 \RequirePackage{mathtools} % improvement over amsmath, like \coloneqq
 \RequirePackage{enumerate} % numbered list
 \RequirePackage{thmtools} % define custom to prove environments
-\RequirePackage{stmaryrd} % \lightning
+\RequirePackage{stmaryrd} % $\lightning$
 \RequirePackage{imakeidx} % Used for index
 
 
@@ -52,6 +52,17 @@
 \def\@with[#1]#2{\begin{bmatrix}[#1] #2 \end{bmatrix}}
 \def\@without#1{\begin{bmatrix} #1 \end{bmatrix}}
 \makeatother
+
+% A good looking transpose T
+\renewcommand{\t}{\mathsf{T}}
+
+% Cone
+\DeclareMathOperator{\cone}{\mathop{cone}}
+
+% Standard sums
+\newcommand{\sumin}{\sum_{i=1}^n}
+\newcommand{\sumk}{\sum_{k=0}^\infty}
+\newcommand{\prodin}{\prod_{i=1}^n}
 
 \makeindex
 \endinput

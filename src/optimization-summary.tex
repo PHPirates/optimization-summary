@@ -124,7 +124,91 @@
         \]
     \end{theorem}
     \begin{proof}
-        Take
+        Take a closed radius around $x$, then the intersection $I$ of the ball and $C$ is closed and bounded so compact by Heine-Borel.
+        Then the minimum of $||i-x||$ for $i \in I$ is attained by Weierstrass.
+        Let $Z$ be the point in $I$ for which this distance is minimal.
+        Take $d=(z-x)^\t $ and $\delta = \frac 1 2 d (z+x)$, then we find out if $dx>\delta$.
+        Note that in general $||x||=xx^\t$.
+        \[
+            dx = d(\frac 1 2 (x+z) + \frac 1 2 (x-z)) = \frac 1 2 d (x+z) - \frac 1 2 d(z-x) = \delta - \frac 1 2 (z-x)^\t (z-x) = \delta - \delta - \frac 1 2 ||d||^2 < \delta.
+        \]
+        So now we have to prove that $dy>\delta$ for all $y \in C$.
+        Suppose not for an $y$, then we need to show that $||y-x||<||z-x||$.
+        Define $f(\lambda) = ||z-\lambda (y-z) -x ||^2$, which is a bit like the distance between a point on $[z,y]$ and $x$ because $z-\lambda(y-z) \in [z,y]$.
+        Now we can write
+        \begin{align*}
+            f(\lambda)&= ((z-x)-\lambda(y-z))((z-x)-\lambda (y-z))^\t \\
+            &=((z-x)-\lambda(y-z))\left( (z-x)^\t - \lambda (y-z)^\t  \right) \quad \text{because in general $(x-y)^\t = x^\t - y^\t$} \\
+            &= (z-x)(z-x)^\t - \lambda (z-x)(y-z)^\t - \lambda (y-z)(z-x)^\t + \lambda^2 (y-z)(y-z)^\t \\
+            &= ||z-x||^2 - 2\lambda (y-z) (z-x)^\t + \lambda ^2 ||y-z||^2 \quad \text{because in general $xy^\t = yx^\t $} \\
+            &= ||d||^2 -2\lambda (y-z) d + \lambda ^2 ||y-z||^2.
+        \end{align*}
+        So
+        \[
+            f'(\lambda)= -2 (y-z) + 2 \lambda ||y-z||^2
+        \]
+        and
+        \[
+            f'(0) = -2 (y-z)d = -2 ||y-z||\cdot ||z-x|| \cos \alpha
+        \]
+        where $\alpha$ is the angle between $y-z$ and $d$.
+        Now we see that since $y$ is on the other side of the hyperplane $dx=\delta$, the angle must be smaller than 90 degrees.
+        Therefore $\cos \alpha >0$ and thus $f'(0)<0$.
+        So for small $\lambda >0$ we have that $f(\lambda) < f(0)$.
+        So
+        \[
+             ||z-x|| = f(0) > f(\lambda) = ||z-\lambda (y-z) -x ||
+        \]
+        and $u \coloneqq z-\lambda (y-z) \in [z,y]$ so $u \in C$.
+        But $||u-x|| < ||z-x||$ so $z$ was not the point in $C$ closest to $x$.~$\lightning$
+    \end{proof}
+    \begin{theorem}[Farkas Lemma]
+        Let $a_1,\dots ,a_n$ and $b$ be column vectors in $\reals^m$, then exactly one of the following is true.
+        \begin{enumerate}
+            \item $b \in \cone\{a_1,\dots,a_n\}$
+            \item There is a row vector $d \in \reals^m$ such that $d a_i \ge 0$ for all $i$ and $db <0$.
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        Suppose they are both true, so there exist $\lambda_i$ such that $\sumin \lambda_i a_i = b$ for $\lambda_i \ge 0$ and there is a $d$ such that $d a_i \ge 0$ and $db <0$.
+        Then
+        \[
+            0 > db = d (\sumin \lambda_i a_i) = \sumin \lambda_i (d a_i) \ge 0\ \lightning
+        \]
+        Now we prove that at least one is true.
+        Suppose 1 is not true, so $b \not \in \cone\{a_1,\dots,a_n\}$.
+        By the separation theorem there exists a $d' \in \reals^m$ such that $d' a_i \ge 0$ for $a \in \cone\{a_1,\dots,a_n\}$ and $d'b <0$.
+        Since $a_1,\dots,a_n \in \cone\{a_1,\dots,a_n\}$ we have $d' a_i \ge 0$ for all $i$ so 2 holds.
+    \end{proof}
+    \begin{question}
+        Derive one variant of Farkas Lemma from an other.
+    \end{question}
+    \begin{answer}
+        Good luck.
+    \end{answer}
+    \begin{theorem}[Farkas Lemma, variant]
+        Let $A$ be an $m \times n$ matrix, $b \in \reals^m$, then exactly one of the following holds.
+        \begin{enumerate}
+            \item There exists an $x \in \reals^n$ such that $Ax\le b$
+            \item There exists an $y \in \reals^m$ such that $yA=0,\ y\ge 0,\ yb<0$.
+        \end{enumerate}
+    \end{theorem}
+    \begin{theorem}[Carath\'eodory's Theorem]
+        Let $S \subset \reals^n$ be a finite set of vectors, if $x \in \cone S$ then there exists a linearly independent set $T \subseteq S$ such that $x \in \cone T$.
+    \end{theorem}
+    \begin{proof}
+        Suppose $T$ was not linearly independent, then the $t \in T$ are dependent so you can write one $t$ as a linear combination of the others and subtract it.
+        In other words, there exist $\mu_t \in \reals$ not all zero such that $\sum_{t \in T} \mu_t t =0$.
+        Now we can combine the linear combinations, such that
+        \begin{align*}
+             \sum \lambda_t t &= x  \\ + \alpha \sum \mu_t t &= 0 \\ \hline \hline
+            \sum (\lambda_t + \alpha \mu_t) t &= x
+        \end{align*}
+        Note that all $\lambda_i >0$ because if $\lambda_i = 0$ then we could remove the corresponding $t$ from $T$ and we would have a smaller $T$.
+
+        So for $\alpha$ small enough, $\lambda_t + \alpha \mu_t >0$.
+        Now let $\alpha$ grow until for one $t$ we have $\lambda_t + \alpha \mu_t =0$.
+        But then there is a linear combination of $t$'s where one coefficient ($\lambda_t + \alpha \mu_t$) is zero, so we did not need that $t \ \lightning$.
     \end{proof}
 
 \end{document}
