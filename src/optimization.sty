@@ -53,11 +53,26 @@
 \def\@without#1{\begin{bmatrix} #1 \end{bmatrix}}
 \makeatother
 
+% Rarely use old \subset. Defining using \newcommand won't work this way.
+\let\strictsubset\subset
+\let\subset\subseteq
+
+% Linear algebra
+
 % A good looking transpose T
 \renewcommand{\t}{\mathsf{T}}
 
 % Cone
 \DeclareMathOperator{\cone}{\mathop{cone}}
+
+% Set of vertices of polyhedron
+\DeclareMathOperator{\V}{\mathrm{V}}
+
+% Lineality space
+\DeclareMathOperator{\lin}{\mathop{lin}}
+
+% Convex hull
+\DeclareMathOperator{\convhull}{\mathop{conv.hull}}
 
 % Standard sums
 \newcommand{\sumin}{\sum_{i=1}^n}

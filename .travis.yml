@@ -1,14 +1,15 @@
-notification:
+notifications:
   email: false
-before_install:
-- sudo apt-get update
-- sudo apt-get install texlive-latex-extra
-- sudo mkdir /home/travis/texmf
-- sudo tlmgr init-usertree
-- sudo tlmgr install stmaryrd
+install:
+ - source ./texlive_install.sh
+cache:
+  directories:
+    - /tmp/texlive
+    - $HOME/.texlive
 script:
 - mkdir _build
-- travis_wait 3 pdflatex -output-directory _build ./src/optimization-summary.tex
+# Prefix command with travis_wait x so it times out after 3 mins, because when the LaTeX doesn't compile pdflatex just hangs instead of quitting.
+- travis_wait 3 pdflatex -output-directory _build ./src/main.tex
 deploy:
   provider: releases
   api_key:

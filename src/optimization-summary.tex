@@ -100,7 +100,7 @@
     \section{Chapter 1}\label{sec:chapter1}
     
     \begin{define}
-        A set is \indx{convex} if $[x,y] \subseteq C$ for all $x,y \in C$, where $[x,y]$ is the line segment $\{ \lambda x + (1-\lambda)y : \lambda \in [0,1] \}$.
+        A set is \indx{convex} if $[x,y] \subset C$ for all $x,y \in C$, where $[x,y]$ is the line segment $\{ \lambda x + (1-\lambda)y : \lambda \in [0,1] \}$.
     \end{define}
     \begin{define}
         A set $C$ is a \indx{cone} if $\alpha x + \beta y \in C$ for all $x,y \in C$ and $\alpha, \beta >0$.
@@ -113,11 +113,11 @@
     \end{define}
     \begin{define}
         Let $H_{d,\delta}^{\le} = \{ x \in \reals^n : dx \le \delta \}$ be a \indx{halfspace}, defined similarly for $\ge, <, >$.
-        $H_{d, \delta}$ is a \indx{separating hyperplane} of sets $X$ and $Y$ if $X \subseteq H_{d,\delta}^\le$ and $Y \subseteq H_{d,\delta}^\ge$.
-        It is a \indx{strongly separating hyperplane} if $X \subseteq H_{d,\delta}^<$ and $Y \subseteq H_{d,\delta}^>$.
+        $H_{d, \delta}$ is a \indx{separating hyperplane} of sets $X$ and $Y$ if $X \subset H_{d,\delta}^\le$ and $Y \subset H_{d,\delta}^\ge$.
+        It is a \indx{strongly separating hyperplane} if $X \subset H_{d,\delta}^<$ and $Y \subset H_{d,\delta}^>$.
     \end{define}
     \begin{theorem}[Separation Theorem]
-        Let $C \subseteq \reals^n$ be a closed, convex set, $x \in \reals^n$.
+        Let $C \subset \reals^n$ be a closed, convex set, $x \in \reals^n$.
         Then
         \[
             x \not \in C \implies \text{there exists a hyperplane $H$ such that $H$ separates $\{x\}$ from $C$}.
@@ -194,7 +194,7 @@
         \end{enumerate}
     \end{theorem}
     \begin{theorem}[Carath\'eodory's Theorem]
-        Let $S \subset \reals^n$ be a finite set of vectors, if $x \in \cone S$ then there exists a linearly independent set $T \subseteq S$ such that $x \in \cone T$.
+        Let $S \subset \reals^n$ be a finite set of vectors, if $x \in \cone S$ then there exists a linearly independent set $T \subset S$ such that $x \in \cone T$.
     \end{theorem}
     \begin{proof}
         Suppose $T$ was not linearly independent, then the $t \in T$ are dependent so you can write one $t$ as a linear combination of the others and subtract it.
@@ -209,6 +209,100 @@
         So for $\alpha$ small enough, $\lambda_t + \alpha \mu_t >0$.
         Now let $\alpha$ grow until for one $t$ we have $\lambda_t + \alpha \mu_t =0$.
         But then there is a linear combination of $t$'s where one coefficient ($\lambda_t + \alpha \mu_t$) is zero, so we did not need that $t \ \lightning$.
+    \end{proof}
+
+    \section{Chapter 2}\label{sec:chapter2}
+    \begin{theorem}[Strong Duality]
+        \[
+            \max \{ cx \mid Ax \le b \} = \min \{ yb \mid yA=c,\ y \ge 0 \}
+        \]
+        if the maximization problem is feasible and bounded.
+    \end{theorem}
+    \begin{proof}
+        % todo
+    \end{proof}
+    \begin{question}
+        Find the dual of $\min \{ yb \mid yA \ge c,\ y \ge 0 \}$.
+    \end{question}
+    \begin{answer}
+        We try to write it in the form $\min \{ y'b \mid y'A'=c,\ y'\ge0 \}$, for example by introducting a slack variable $S$ so that the problem becomes
+        \begin{align*}
+            &\min \{ yb \mid yA -SI=c,\ y \ge 0,\ S \ge 0 \} \\
+            =&\min \{ \matrix{y & S} \matrix{b \\ 0} \mid \matrix{y & S} \matrix{A \\ -I} = c,\ \matrix{y & S} \ge 0 \} \\
+            =&\max \{ cx \mid \matrix{A \\ -I} x \le \matrix{b \\ 0} \} \\
+            =&\max \{ cx \mid Ax\le b,\ x \ge 0 \}.
+        \end{align*}
+    \end{answer}
+    \begin{theorem}[Complementary Slackness]
+        Referring to the situation of strong duality,
+        \[
+            cx = yb \iff \text{ both solutions are optimal } \iff (Ax)_i = b_i \text{ or } y_i = 0\ \forall_i
+        \]
+        This means that if $x^*$ is an optimal solution to the primal problem, $y^*$ for the dual, if we plug $x^*$ into the $i$'th inequality of the primal problem and it turns out to have slack (``speling'' in Dutch), which means that equality does not hold, then the theorem says that $y_i^*$ has to be 0.
+
+        This also holds in reverse, so if the $j$'th inequality of the dual has slack for $y^*$, then $x_j^* = 0$.
+        Hence the name `complementary slack relation`.
+    \end{theorem}
+    \begin{question}
+        Derive the optimal dual solution from the optimal primal solution $(5, 15)$ of the problem
+        \[
+            \min \{ 5x + 10y \mid x_1 + 3y\le 50,\ 4x+2y \le 60,\ x_1 \le 5,\ x_1,x_2 \ge 0 \}.
+        \]
+    \end{question}
+    \begin{answer}
+        If we plug $(5,15)$ into the primal problem we see that the first inequality is tight but for the second $4\cdot 5 + 2 \cdot 15 = 50 < 60$ so there is slack here, so $y_2^* =0$.
+        
+        The dual of this problem is 
+        \[
+            \max \{ 50 y_1 + 60 y_2 + 5 y_3 \mid y_1 + 4 y_2 + y_3 \ge 5,\ 3y_1 + 2y_2 \ge 10,\ y \ge 0 \}
+        \]
+        so since $x_2^* \neq 0$ we know that the corresponding inequality of the dual must be tight, so $3y_1^* + 2 \cdot 0 = 10$ so $y_1^* = 10/3$.
+        Also $x_1^* \neq 0$ so $10/3 + y_3^* =5$ so $y^* = (10/3, 0, 5/3)$.
+    \end{answer}
+    \begin{theorem}
+        Any linear optimization problem has a basic optimal solution.
+    \end{theorem}
+
+    \section{Chapter 3}\label{sec:chapter3}
+
+    \begin{define}
+
+        $\sumin \lambda_i x_i$ is an \indx{affine combination} of $x_i$ if $\sumin \lambda_i = 1$.
+
+        $\sumin \lambda_i x_i$ is a \indx{convex combination} of $x_i$ if $\sumin \lambda_i = 1$ and $\lambda_i \ge 0$.
+
+        The \indx{convex hull} of a set of vectors is the set of all convex combinations of subsets.
+        In two dimensions, think of a flat surface spanned by points.
+
+        A \indx{polyhedron} is $\{ x : Ax \le b \}$, the solution of a finite set of inequalities.
+
+        A \indx{polytope} is the convex hull of a finite set of points.
+
+        $F$ is a \indx{face} of a polyhedron $P$ if $F=P \cap H$ for some supporting hyperplane $H$, which touches $P$ but does not separate.
+
+        A face $F$ is a \indx{facet} of $P$ if $\dim F = \dim P -1$.
+
+        An \indx{edge} of $P$ is a bounded face $F$ such that $\dim F =1$.
+
+        A \indx{ray} is an unbounded edge.
+
+        A point $v \in P$ is a \indx{vertex} if $\{v\}$ is a face of $P$. $\V(P)$ is the set of vertices of $P$.
+
+        The \indx{lineality space} of $P$ is the linear space $\lin(P) \coloneqq \{ d \in \reals^n : \{ x + \lambda d : \lambda \in \reals \} \subset P \ \forall_{x \in P} \}$, so the set of directions $d$ for which for all points $x \in P$ we have that $x + \lambda d$ is also in $P$.
+
+        The \indx{cone of directions} of $P$ is the lineality space for $\lambda \ge 0$.
+
+    \end{define}
+    \begin{theorem}
+        If $P$ is a bounded polyhedron, $P = \convhull \V(P)$.
+    \end{theorem}
+    \begin{proof}
+        Assumpe $P$ is non-empty.
+        \begin{itemize}
+            \item ``$\supseteq$'' $\V(P) \subset P$ because $\forall_{v \in \V(P)} : \{ v\} = P \cap H$ for a hyperplane $H$.
+            Because $P$ is convex ($P$ is the intersection of convex halfspaces), $\convhull \V(P) \subset P$.
+            \item ``$\subseteq$'' Suppose note, let $x \in   $
+        \end{itemize}
     \end{proof}
 
 \end{document}
