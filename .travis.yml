@@ -1,5 +1,3 @@
-notifications:
-  email: false
 install:
  - source ./texlive_install.sh
 cache:

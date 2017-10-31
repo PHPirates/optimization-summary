@@ -301,8 +301,19 @@
         \begin{itemize}
             \item ``$\supseteq$'' $\V(P) \subset P$ because $\forall_{v \in \V(P)} : \{ v\} = P \cap H$ for a hyperplane $H$.
             Because $P$ is convex ($P$ is the intersection of convex halfspaces), $\convhull \V(P) \subset P$.
-            \item ``$\subseteq$'' Suppose note, let $x \in   $
+            \item ``$\subseteq$'' Suppose not, let $x \in P \backslash \convhull \V(P) $.
+            Then by the separation theorem there exist $d \in \reals^n,\ \delta \in \reals$ such that $H_{d,\delta}$ strongly separates $\convhull \V(P)$ and $x$.
+            Without loss of generality say $d y < \delta $ for all $y \in \convhull \V (P)$ and $dx > \delta$.
+            Since $P$ is bounded, $\max \{ dy : y \in P \}$ is attained.
+            So
+            \[
+                \max \{ d y : y \in \V (P) \} \le \max \{ dy : y \in \convhull \V (P) \} < \delta < dx \le \max \{ dz : z \in P \}
+            \]
+            but by a lemma we know that $\max \{ dz : z \in P \}$ is attained by a vertex of $P$. $\lightning$.
         \end{itemize}
     \end{proof}
+    \begin{theorem}[Minkowski-Weyl]
+        Let $C$ be a cone, then $C$ is polyhedral if and only if $C$ is finitely generated, which means that it is defined by a finite number of vectors.
+    \end{theorem}
 
 \end{document}
