@@ -32,7 +32,7 @@ tlmgr install xkeyval
 #tlmgr install collection-latex
 
 # Other contrib packages: done as a block to avoid multiple calls to tlmgr
-# texlive-latex-base is needed to run pdflatex
+# pgf includes tikz, which requires xcolor
 tlmgr install   \
   exam          \
   amsfonts      \
@@ -43,6 +43,7 @@ tlmgr install   \
   enumerate     \
   thmtools      \
   stmaryrd      \
+  xcolor        \
   pgf           \
   imakeidx
 
