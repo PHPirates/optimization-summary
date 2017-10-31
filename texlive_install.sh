@@ -28,6 +28,9 @@ tlmgr install luatex
 # Needed for TeX Live 2017
 tlmgr install xkeyval
 
+tlmgr install tikz-cd
+tlmgr install tikz
+
 # A kind of minimum set of packages needed
 #tlmgr install collection-latex
 
@@ -43,7 +46,6 @@ tlmgr install   \
   enumerate     \
   thmtools      \
   stmaryrd      \
-  tikz          \
   imakeidx
 
 
