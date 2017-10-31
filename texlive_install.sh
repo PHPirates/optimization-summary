@@ -43,6 +43,7 @@ tlmgr install   \
   enumerate     \
   thmtools      \
   stmaryrd      \
+  tikz          \
   imakeidx
 
 

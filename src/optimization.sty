@@ -8,6 +8,7 @@
 \RequirePackage{thmtools} % define custom to prove environments
 \RequirePackage{stmaryrd} % $\lightning$
 \RequirePackage{imakeidx} % Used for index
+\RequirePackage{tikz} % Drawings
 
 
 \theoremstyle{definition}
@@ -15,6 +16,7 @@
 \newtheorem*{question}{Question}
 \newtheorem*{theorem}{Theorem}
 \newtheorem*{answer}{Answer}
+\newtheorem*{notation}{Notation}
 \newcommand{\indx}[1]{\index{#1}\textsl{#1}} % Do not use \sl
 
 \newcommand{\reals}{\mathbb{R}}
@@ -78,6 +80,10 @@
 \newcommand{\sumin}{\sum_{i=1}^n}
 \newcommand{\sumk}{\sum_{k=0}^\infty}
 \newcommand{\prodin}{\prod_{i=1}^n}
+
+% Circled numbers
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+        \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 \makeindex
 \endinput
