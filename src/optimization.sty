@@ -29,6 +29,14 @@
 % To remove the section numbering
 \renewcommand\@seccntformat[1]{}
 
+\def\vectorstat#1{{\textbf{#1}}} % vectors are defined as bold
+
+\protected\def\zero{\vectorstat{0}}
+\protected\def\one{\vectorstat{1}}
+\protected\def\two{\vectorstat{2}}
+
+%%%%%% new %%%%%%%%%%%%%%
+
 % Bold theorem titles
 \makeatletter
 \def\th@plain{%
@@ -63,6 +71,8 @@
 % Rarely use old \subset. Defining using \newcommand won't work this way.
 \let\strictsubset\subset
 \let\subset\subseteq
+\let\strictsupset\supset
+\let\supset\supseteq
 
 % Linear algebra
 
@@ -89,6 +99,10 @@
 % Circled numbers
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
         \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+% ceiling which scales
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
 \makeindex
 \endinput
