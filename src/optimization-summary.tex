@@ -416,7 +416,7 @@
             \end{tabular}
         \]
         looks unbounded because you can add the last row to the first row indefinitely.
-        We prove that the problem is unbounded by finding an $f$ such that $f \ge 0,\ Af=0$ and $cf >0$, in this cae for example $f^\t = \matrix{1 & 1 & 1 & 0 & 0 & 0}$.
+        We prove that the problem is unbounded by finding an $f$ such that $f \ge 0,\ Af=0$ and $cf >0$, in this case for example $f^\t = \matrix{1 & 1 & 1 & 0 & 0 & 0}$.
         Now we see that $x^{\{1,2,6\}} + \lambda f$ is a feasible solution, because
         \[
             A (x^{\{1,2,6\}} + \lambda f) = A x^{\{1,2,6\}} + \lambda A f = b + \lambda \cdot 0 = b
@@ -564,5 +564,99 @@
         \]
         By linear optimalization duality and because the matrices are TU it follows that $\nu (G) = \tau (G)$.
     \end{proof}
+
+    \section{Chapter 7}
+
+    \begin{define}
+        A function $f$ is \indx{convex} if $f(x + \lambda (y-x)) \le f(x) + \lambda ( f(y)-f(x))$, $\lambda \in (0,1)$.
+    \end{define}
+    \begin{theorem}
+        A differentiable function $f$ is convex if and only if $f(y) \ge f(x) + \nabla f(y-x)$.
+    \end{theorem}
+    \begin{define}
+        The \indx{Hessian} of $f$ at $x$ is
+        \[
+            \nabla^2 f(x) = \matrix{
+            \frac{\partial^2 f}{\partial x_1^2} (x) & \dots & \frac{\partial^2 f}{\partial x_1 \partial x_n} (x) \\
+            \vdots &\ddots &\vdots \\
+            \frac{\partial^2 f}{\partial x_n \partial x_1} (x)  & \dots & \frac{\partial^2 f}{\partial x_n^2} (x) }
+        \]
+    \end{define}
+    \begin{question}
+        Prove that a certain function $f$ is convex, for example $f(x) = ||x-c||+3||x-d||$.
+    \end{question}
+    \begin{answer}
+        Recall that when $f$ is convex, the following are also convex.
+        \begin{itemize}
+            \item $x \mapsto \alpha f(x)$, $\alpha >0$
+            \item $x \mapsto f(x+t)$
+            \item $x \mapsto f(Ax)$
+        \end{itemize}
+        so since $x \mapsto ||x||$ is convex, $||x-c||$ is convex etc.
+
+        If you need to find a counterexample, try to find $x,y$ and $\lambda$ as in the definition of a convex function.
+    \end{answer}
+    \begin{answer}
+        Another possibility is to calculate the Hessian and find out if it is PSD.
+    \end{answer}
+    \begin{define}
+        A symmetric matrix $A$ is \indx{positive semidefinite} if and only if $x^\t A x \ge 0$ for all $x$.
+    \end{define}
+    But it is easier to think of a PSD matrix as characterised in the next theorem.
+    \begin{theorem}
+        Let $A$ be a symmetric matrix, then the following are equivalent.
+        \begin{enumerate}
+            \item $A$ is PSD
+            \item All eigenvalues are nonnegative.
+            \item $A=Z^\t Z$ for a real matrix $Z$.
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+%        \paragraph{(1) $\implies$ (2)} Let $A$ be PSD, let $\lambda$ be an eigenvalue of $A$ and $f$ the corresponding eigenvector, so $Af=\lambda f$.
+%        If we multiply both sides with $f^\t$ then $f^\t A f = \lambda ||f||^2$.
+%        But $A$ is PSD so by definition $f^\t A f \ge 0$, so since $||f||^2 \ge 0$ it must be that $\lambda \ge 0$.
+%        \\
+%        \paragraph{$(2) \implies (3)$} (2) $\implies$ (3)\ Square roots of nonnegative numbers are real, so $\sqrt{\lambda_i} \in \reals$.
+%        Since $A$ is symmetric there exists a orthonormal basis of eigenvectors, put these as columns in a matrix $F$.
+%        Now $F^\t F = I$ because $f^\t f = ||f||$, and $F^\t A F$ is equal to the matrix with on the diagonal the eigenvalues of $A$. $f^\t \cdot \lambda f = \lambda ||f|| = \lambda$.
+%        Take
+%        \[
+%            Z = \matrix{\sqrt{\lambda_1} & \dots & 0 \\
+%            \vdots & \ddots & \vdots \\
+%            0 & \dots & \sqrt{\lambda_n}} F^{-1}
+%        \]
+%        Note that in general $\left( A^{-1} \right)^\t = \left( A^\t \right)^{-1}$.
+%        Now $Z^\t Z = \left( F^\t \right)^{-1} F^{-1} L$
+%        where $L$ is the matrix with on the diagonal the $\lambda_i$.
+%        This should be equal to $A$. % todo
+    \end{proof}
+    \begin{question}
+        Find out if the matrix
+        \[
+            A = \matrix{ 1 & 2 & -1 \\ 2 & 5 & 1 \\ -1 & 1 & 12}
+        \]
+        is PSD.
+    \end{question}
+    \begin{answer}
+        Recall the allowed operations for `symmetric swiping':
+        \begin{enumerate}
+            \item Multiplying the $i$'th row and $i$'th column by $\lambda \neq 0$.
+            Note that the element on the diagonal will be multipliedby $\lambda^2$.
+            \item Swapping the $i$'th and $j$'th column and swapping the $i$'th and $j$'th row.
+            \item Adding $\lambda$ times the $i$'th colun to the $j$'th column and adding $\lambda$ times the $i$'th row to the $j$'th row.
+        \end{enumerate}
+        Now we swipe
+        \[
+            A \sim \dots \sim \matrix{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 11}
+        \]
+        and notice that the eigenvalues, which are on the diagonal, are positive so $A$ is PSD\@.
+        Remember then if you encounter a negative number on the diagonal when swiping, then this is a submatrix with $\det <0$ so the matrix cannot be PSD\@.
+    \end{answer}
+    The following theorem tells us that when the values next to the diagonal are small compared to the elements on the diagonal, then the matrix eigenvalues will behave approximately like a diagonal matrix.
+    \begin{theorem}[Ger\v{s}gorin's Theorem]
+        Given a complex $n \times n$ matrix $A$, let $\lambda$ be an eigenvalue of $A$.
+        Let $\rho_p = \sum_{j=p} |a_{pj}|$ be the sum of absolute elements of the $p$'th row without the element on the diagonal.
+        Then $\{ \lambda \in \complex : |\lambda - a_{pp}| \le \rho_p \}$ is the Ger\v{s}gorin disk.
+    \end{theorem}
 
 \end{document}
